@@ -71,4 +71,6 @@ The requirements for this application to be completely fault tolerate are signif
 
 The balance/transaction APIs do not tell us enough information about who balances belong to.
 
-For a mixer to work well, other users would need to be involved in the mixing process at the same time, the more users the better the protection this service offers. This was considered but aside from waiting for a balance to accumulate on the house address, or waiting for at least n number of user to be involved in a time window there isn't a particularly elegant way to accomplish this. 
+For a mixer to work well, other users would need to be involved in the mixing process at the same time, the more users the better the protection this service offers. This was considered but aside from waiting for a balance to accumulate on the house address, or waiting for at least n number of user to be involved in a time window there isn't a particularly elegant way to accomplish this.
+
+To anonymize this even further, Jobcoin could charge a randomized fee within a range 0.05 - 0.1 % which would make tieing out the starting quantity with the ending quantity even harder. Users would expect to accept a variable fee. This was excluded to keep implementation simple.
