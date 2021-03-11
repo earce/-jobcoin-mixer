@@ -61,6 +61,12 @@ curl --header "Content-Type: application/json" -X POST --data '["John","Alice", 
 curl -X GET localhost/v1/balance?address=Erick
 ```
 
+## Privacy optimizations (implemented)
+
+Provided amount is broken up into n smaller decimal amounts which are a random selected size and sum the original amount. See [JobcoinMath.java](https://github.com/earce/jobcoin-mixer/blob/main/src/main/java/com/gemini/jobcoin/helper/JobcoinMath.java)
+
+These different quantities are sent in random intervals with a 20s upper bound (configurable) to a randomly chosen address from the list of provided addresses in the register command. See [MixingEngine.java](https://github.com/earce/jobcoin-mixer/blob/main/src/main/java/com/gemini/jobcoin/verticles/MixingEngine.java)
+
 ## Privacy optimizations (not implemented)
 
 
