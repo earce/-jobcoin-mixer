@@ -6,7 +6,7 @@ Simple Java based HTTP webserver app meant to anonymize Jobcoin transactions
 
 ## REST API
 
-**GET** */v1/commands* returns all available API endpoints available to client, *call this for a description of each endpoint and required input*
+**GET** */v1/commands* returns all available API endpoints available to client, **call this for a description of each endpoint and required input**
 
 **GET** */v1/status* returns status of the Jobcoin app
 
