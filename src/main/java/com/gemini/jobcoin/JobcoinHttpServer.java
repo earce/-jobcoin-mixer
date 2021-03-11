@@ -47,7 +47,7 @@ public class JobcoinHttpServer extends AbstractVerticle {
 
         httpServer
                 .requestHandler(router)
-                .listen(80);
+                .listen(8111);
     }
 
     public static void successResponse(final Message<?> message,

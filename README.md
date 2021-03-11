@@ -2,7 +2,7 @@
 
 ## REST API
 
-**GET**  */v1/status* returns status of the Jobcoin app
+**GET**  */status* returns status of the Jobcoin app
 
 **GET**  */v1/commands* returns all available API endpoints available to client, **call this for a description of each endpoint and required input**
 
@@ -49,13 +49,13 @@ At any point */v1/balance* can be used to check the balance of any address.
 **/v1/register**
 
 ```bash
-curl --header "Content-Type: application/json" -X POST --data '["John","Alice", "Bob"]' localhost/v1/register
+curl --header "Content-Type: application/json" -X POST --data '["John","Alice", "Bob"]' localhost:8111/v1/register
 ```
 
 **/v1/balance**
 
 ```bash
-curl -X GET localhost/v1/balance?address=Erick
+curl -X GET localhost:8111/v1/balance?address=Erick
 ```
 
 ## Privacy optimizations (implemented)
