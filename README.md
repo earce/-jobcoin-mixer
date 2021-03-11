@@ -4,11 +4,19 @@
 
 Simple Java based HTTP webserver app meant to anonymize Jobcoin transactions
 
-## Command API
+## REST API
 
-**GET** */v1/commands* returns all available API endpoints available to client
+**GET**  */v1/status* returns status of the Jobcoin app
 
-**GET** */v1/status* returns status of the Jobcoin app
+**GET**  */v1/commands* returns all available API endpoints available to client, **call this for a description of each endpoint and required input**
+
+**GET**  */v1/balance* retrieves balance of an address
+
+**GET**  */v1/mixingStatus* gets status of provided requestId
+
+**POST** */v1/register* registers provided address list and returns deposit address
+
+**POST** */v1/send* sends Jobcoins from and to provided addresses, registers Jobcoins to be mixed and returns associated requestId
 
 ## Running an instance
 
@@ -38,6 +46,20 @@ Using the mixer involves several steps:
 3. Finally, using */v1/mixingStatus* you can check if the mixing is still in process.
 
 At any point */v1/balance* can be used to check the balance of any address.
+
+## Curl examples for aformentioned usage
+
+**/v1/register**
+
+```bash
+curl --header "Content-Type: application/json" -X POST --data '["John","Alice", "Bob"]' localhost/v1/register
+```
+
+**/v1/balance**
+
+```bash
+curl -X GET localhost/v1/balance?address=Erick
+```
 
 ## Notes and other things considered
 
