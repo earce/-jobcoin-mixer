@@ -158,7 +158,7 @@ public class JobcoinHttpServer extends AbstractVerticle {
 
         final ObjectNode sendJson = JsonNodeFactory.instance.objectNode()
                 .put("payload", "{ \"fromAddress\" : \"srcAddress\", \"toAddress\" : \"destAddress\", \"amount\" : x.xx }")
-                .put("description", "Sends [amount] from [srcAddress] to [destAddress]");
+                .put("description", "Sends [amount] from [srcAddress] to [destAddress] will register with mixer and return associated requestId to track state of mixing request");
 
         final ObjectNode balanceJson = JsonNodeFactory.instance.objectNode()
                 .put("description", "Retrieves balance at [balanceAddress]");
