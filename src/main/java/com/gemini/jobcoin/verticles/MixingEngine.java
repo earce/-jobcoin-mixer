@@ -37,13 +37,13 @@ public class MixingEngine extends AbstractVerticle {
     private static final ScheduledExecutorService executorService =
             Executors.newScheduledThreadPool(2);
 
-    private static final int maxIntervalMs = 20000;
+    private final int maxIntervalMs;
 
-    private static final int minIntervalMs = 1000;
+    private final int minIntervalMs;
 
-    private static final int maxParts = 10;
+    private final int maxParts;
 
-    private static final int minParts = 3;
+    private final int minParts;
 
     private final BlockingQueue<MixingTask> queue = new LinkedBlockingQueue<>();
 
@@ -59,10 +59,33 @@ public class MixingEngine extends AbstractVerticle {
                         final KVStore<String, Boolean> requestStore,
                         final UUIDGenerator requestIdGenerator,
                         final GeminiClient geminiClient) {
+        this(
+                depositAddressStore,
+                requestStore,
+                requestIdGenerator,
+                geminiClient,
+                20000,
+                1000,
+                3,
+                10);
+    }
+
+    public MixingEngine(final KVStore<String, List<String>> depositAddressStore,
+                        final KVStore<String, Boolean> requestStore,
+                        final UUIDGenerator requestIdGenerator,
+                        final GeminiClient geminiClient,
+                        int maxIntervalMs,
+                        int minIntervalMs,
+                        int maxParts,
+                        int minParts) {
         this.depositAddressStore = depositAddressStore;
         this.requestStore = requestStore;
         this.requestIdGenerator = requestIdGenerator;
         this.geminiClient = geminiClient;
+        this.maxIntervalMs = maxIntervalMs;
+        this.minIntervalMs = minIntervalMs;
+        this.maxParts = maxParts;
+        this.minParts = minParts;
         new Thread(this::mixerScheduler).start();
     }
 
@@ -82,9 +105,10 @@ public class MixingEngine extends AbstractVerticle {
      *
      * @param message to respond to
      */
-    private void consumeMessage(final Message<?> message) {
+    void consumeMessage(final Message<?> message) {
         try {
             final String requestId = requestIdGenerator.generateId();
+
             final JsonNode mixingRequest = mapper.readTree(message.body().toString());
 
             final String amount = mixingRequest.get("amount").textValue();
@@ -98,6 +122,7 @@ public class MixingEngine extends AbstractVerticle {
             logger.info(String.format("Request Id=[%s] Deposit Address=[%s] Amount=[%s] No Of Parts=[%d] Quantities=%s",
                     requestId, depositAddress, amount, quantities.size(), quantities.toString()));
 
+
             requestStore.put(requestId, false);
 
             queue.add(new MixingTask(
@@ -105,6 +130,7 @@ public class MixingEngine extends AbstractVerticle {
                     userOwnedAddresses,
                     requestId,
                     this));
+
 
             JobcoinHttpServer.successResponse(message, JsonNodeFactory.instance.objectNode()
                     .put("requestId", requestId));

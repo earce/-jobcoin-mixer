@@ -1,5 +1,6 @@
 package com.gemini.jobcoin.verticles;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -44,7 +45,7 @@ public class SendHandler extends AbstractVerticle {
      *
      * @param message to process
      */
-    private void consumeMessage(final Message<?> message) {
+    void consumeMessage(final Message<?> message) {
         try {
             final JsonNode msg = mapper.readTree(message.body().toString());
             final MixingRequest mixingRequest = buildRequest(msg);
@@ -64,6 +65,8 @@ public class SendHandler extends AbstractVerticle {
                     String.format("Gemini API returned an error %s", e.getMessage()), e.getStatusCode());
         } catch (JsonRequestException e) {
             JobcoinHttpServer.errorResponse(message, e.getMessage(), e.getStatusCode());
+        } catch (JsonProcessingException e) {
+            JobcoinHttpServer.errorResponse(message, "Issue processing Json", 400);
         } catch (Exception e) {
             JobcoinHttpServer.errorResponse(message,
                     String.format("Issue submitting request %s", e.getMessage()), 500);
@@ -80,10 +83,22 @@ public class SendHandler extends AbstractVerticle {
     private void registerToMixingEngine(final Message<?> message, final MixingRequest mixingRequest) {
         vertx.eventBus().request(MIXER_VERTX_V1, mixingRequest.toString(), event -> {
             if (event.succeeded()) {
-                JobcoinHttpServer.successResponse(message, (String)event.result().body());
+                try {
+                    final ObjectNode msg = (ObjectNode) mapper.readTree((String)event.result().body());
+                    JobcoinHttpServer.successResponse(message, msg.get("message").toString());
+                } catch (Exception e) {
+                    JobcoinHttpServer.errorResponse(message, String.format(
+                            "Issue processing mixing engine response %s", event.result().body()), 500);
+                }
             } else {
-                JobcoinHttpServer.errorResponse(message,
-                        String.format("Issue submitting request %s", event.cause().getMessage()), 500);
+                try {
+                    final ObjectNode msg = (ObjectNode) mapper.readTree(event.cause().getMessage());
+                    JobcoinHttpServer.errorResponse(message, msg.get("message").asText(), 500);
+                } catch (Exception e) {
+                    JobcoinHttpServer.errorResponse(message, String.format(
+                            "Issue processing mixing engine response %s", event.cause().getMessage()), 500);
+                }
+
             }
         });
     }
@@ -112,7 +127,7 @@ public class SendHandler extends AbstractVerticle {
         final String toAddr = Validator.stringField("toAddress", msg);
 
         if (!depositAddressStore.containsKey(toAddr)) {
-            throw new JsonRequestException("[%s] is not an address registered to Jobcoin", 422);
+            throw new JsonRequestException(String.format("[%s] is not an address registered to Jobcoin", toAddr), 422);
         }
         if (!msg.has("amount")) {
             throw new JsonRequestException("Payload missing amount", 400);

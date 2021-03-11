@@ -135,7 +135,7 @@ public class JobcoinHttpServer extends AbstractVerticle {
      *
      * @param ctx for request
      */
-    private void jobcoinUp(final RoutingContext ctx) {
+    void jobcoinUp(final RoutingContext ctx) {
         ctx.response()
                 .putHeader(CONTENT_TYPE, APPLICATION_JSON)
                 .setStatusCode(200)
@@ -150,7 +150,7 @@ public class JobcoinHttpServer extends AbstractVerticle {
      *
      * @param ctx for request
      */
-    private void getCommands(final RoutingContext ctx) {
+    void getCommands(final RoutingContext ctx) {
 
         final ObjectNode registerJson = JsonNodeFactory.instance.objectNode()
                 .put("payload", " [address 1,address 2 ... address n]")

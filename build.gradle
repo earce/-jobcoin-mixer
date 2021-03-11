@@ -1,5 +1,18 @@
 plugins {
     id 'java'
+    id 'jacoco'
+}
+
+test {
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.enabled true
+    }
 }
 
 group 'org.example'
@@ -15,6 +28,30 @@ jar {
     }
 }
 
+task coverageReport {
+    doLast {
+
+        def slurper = new XmlSlurper()
+
+        slurper.setFeature("http://apache.org/xml/features/disallow-doctype-decl", false)
+        slurper.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false)
+
+        def missed = 0.0
+        def covered = 0.0
+
+        def xml = slurper.parse("build/reports/jacoco/test/jacocoTestReport.xml")
+        def counter = xml.counter.find {
+            node -> node.@type == 'INSTRUCTION'
+        }
+        missed += counter.@missed.toDouble()
+        covered += counter.@covered.toDouble()
+        def total = missed + covered
+        def percentage = covered / total * 100
+        printf "Missed %.0f instructions%n", missed
+        printf "Covered %.0f instructions%n", covered
+        printf "Total %.2f%%%n", percentage
+    }
+}
 
 ext {
     vertx = '4.0.2'

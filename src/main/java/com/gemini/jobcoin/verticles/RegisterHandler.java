@@ -44,7 +44,7 @@ public class RegisterHandler extends AbstractVerticle {
      *
      * @param message to process
      */
-    private void consumeMessage(final Message<?> message) {
+    void consumeMessage(final Message<?> message) {
         try {
             final JsonNode msg = mapper.readTree(message.body().toString());
             final List<String> userAddresses = validateAndExtractAddresses(msg);
@@ -78,7 +78,7 @@ public class RegisterHandler extends AbstractVerticle {
      * @param msg to extract addresses from
      * @return list of validated addresses
      */
-    public List<String> validateAndExtractAddresses(final JsonNode msg)
+    private List<String> validateAndExtractAddresses(final JsonNode msg)
             throws JsonRequestException {
 
         if (!(msg instanceof ArrayNode)) {
@@ -86,7 +86,7 @@ public class RegisterHandler extends AbstractVerticle {
         }
         final ArrayNode addresses = (ArrayNode) msg;
         if (addresses.size() < 1) {
-            throw new JsonRequestException("Must register at least 1 address", 422);
+            throw new JsonRequestException("Must register at least 1 address", 400);
         }
         final Set<String> userAddresses = new HashSet<>(addresses.size());
         for (JsonNode n : addresses) {
@@ -95,7 +95,7 @@ public class RegisterHandler extends AbstractVerticle {
             }
             final String address = n.asText();
             if (address.length() < 1) {
-                throw new JsonRequestException("Provided an address which is an empty string", 422);
+                throw new JsonRequestException("Provided an address which is an empty string", 400);
             }
             userAddresses.add(address);
         }

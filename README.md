@@ -1,9 +1,5 @@
 # Jobcoin Mixer
 
-## Description
-
-Simple Java based HTTP webserver app meant to anonymize Jobcoin transactions
-
 ## REST API
 
 **GET**  */v1/status* returns status of the Jobcoin app
@@ -77,6 +73,8 @@ To anonymize this even further, Jobcoin could charge a randomized fee within a r
 Another step to anonymize this and make tracking difficult would be single use or time limited deposit addresses. The deposit address provided by Jobcoin would have a limited use there by forcing use of fresh addresses.
 
 ## Notes and other things considered
+
+Coverage <kbd>~75%</kbd>
 
 Vertx was chosen because it is a well known reactor pattern (event driven) framework that makes bootstrapping a lot of the HTTP server portions fairly fast.
 

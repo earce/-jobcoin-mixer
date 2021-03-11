@@ -35,7 +35,7 @@ public class MixingStatusHandler extends AbstractVerticle {
      *
      * @param message to process
      */
-    private void consumeMessage(final Message<?> message) {
+    void consumeMessage(final Message<?> message) {
         try {
             final JsonNode msg = mapper.readTree(message.body().toString());
             final String requestId = Validator.stringField("requestId", msg);
@@ -56,7 +56,7 @@ public class MixingStatusHandler extends AbstractVerticle {
             JobcoinHttpServer.errorResponse(message, e.getMessage(), e.getStatusCode());
         } catch (Exception e) {
             JobcoinHttpServer.errorResponse(message,
-                    String.format("Issue processing %s", e.getMessage()), 500);
+                    String.format("Issue submitting request %s", e.getMessage()), 500);
         }
     }
 }
