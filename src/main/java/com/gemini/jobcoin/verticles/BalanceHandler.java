@@ -37,7 +37,7 @@ public class BalanceHandler extends AbstractVerticle {
      *
      * @param message to process
      */
-    private void consumeMessage(final Message<?> message) {
+    void consumeMessage(final Message<?> message) {
         try {
             final JsonNode msg = mapper.readTree(message.body().toString());
             final String address = Validator.stringField("address", msg);

@@ -44,3 +44,7 @@ At any point */v1/balance* can be used to check the balance of any address.
 Vertx was chosen because it is a well known reactor pattern (event driven) framework that makes bootstrapping a lot of the HTTP server portions fairly fast.
 
 In a fully realized version of this application persistence and cross instance guarantees would be a lot bigger part of this. Several classes found in the **com.gemini.jobcoin.persistence** package are mean to simulate this.
+
+The requirements for this application to be completely fault tolerate are significant, especially if one aims to reuse destination addresses as well as deposit addresses and handle modifying their values concurrently. A strong transaction system would need to exist in the Gemini API with individual transaction ids that could be used to tie out what has been send where by who in the event of system a failure. 
+
+The balance/transaction APIs do not tell us enough information tell us who balances belong to.
