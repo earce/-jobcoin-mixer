@@ -43,7 +43,7 @@ At any point */v1/balance* can be used to check the balance of any address.
 
 Status check:
 
-```bash
+```bash script
 curl -X GET localhost/status
 ```
 
