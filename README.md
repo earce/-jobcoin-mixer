@@ -72,9 +72,21 @@ To anonymize this even further, Jobcoin could charge a randomized fee within a r
 
 Another step to anonymize this and make tracking difficult would be single use or time limited deposit addresses. The deposit address provided by Jobcoin would have a limited use there by forcing use of fresh addresses.
 
-## Notes and other things considered
+## Testing
 
-Coverage <kbd>~75%</kbd>
+Code Coverage (Instructions) <kbd>~75%</kbd> 
+
+How to view code coverage as webpage
+
+```bash script
+$ ./gradlew build
+$ ./gradlew coverageReport
+$ cd build/reports/jacoco/test/html
+```
+
+Then you should be able to click on index.html to view it as a webpage.
+
+## Notes and other things considered
 
 Vertx was chosen because it is a well known reactor pattern (event driven) framework that makes bootstrapping a lot of the HTTP server portions fairly fast.
 
