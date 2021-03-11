@@ -70,3 +70,5 @@ In a fully realized version of this application persistence and cross instance g
 The requirements for this application to be completely fault tolerate are significant, especially if one aims to reuse destination addresses as well as deposit addresses and handle modifying their values concurrently. A strong transaction system would need to exist in the Gemini API with individual transaction ids that could be used to tie out what has been send where by who in the event of system a failure. 
 
 The balance/transaction APIs do not tell us enough information about who balances belong to.
+
+For a mixer to work well, other users would need to be involved in the mixing process at the same time, the more users the better the protection this service offers. This was considered but aside from waiting for a balance to accumulate on the house address, or waiting for at least n number of user to be involved in a time window there isn't a particularly elegant way to accomplish this. 
