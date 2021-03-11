@@ -41,19 +41,13 @@ At any point */v1/balance* can be used to check the balance of any address.
 
 ## Curl examples for aformentioned usage
 
-Status check:
-
-```bash script
-curl -X GET localhost/status
-```
-
-Register addresses:
+**/v1/register**
 
 ```bash
 curl --header "Content-Type: application/json" -X POST --data '["John","Alice", "Bob"]' localhost/v1/register
 ```
 
-Get Balance:
+**/v1/balance**
 
 ```bash
 curl -X GET localhost/v1/balance?address=Erick
