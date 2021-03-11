@@ -19,7 +19,6 @@ jar {
 ext {
     vertx = '4.0.2'
     jackson = '2.12.2'
-    log4j = '2.13.1'
 }
 
 dependencies {
