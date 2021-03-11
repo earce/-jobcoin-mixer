@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+
+ext {
+    vertx = '4.0.2'
+    jackson = '2.12.2'
+    log4j = '2.13.1'
+}
+
+dependencies {
+    compile group: 'io.vertx', name: 'vertx-core', version: "$vertx"
+    compile group: 'io.vertx', name: 'vertx-web', version: "$vertx"
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "$jackson"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
