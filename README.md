@@ -12,7 +12,7 @@ Simple Java based HTTP webserver app meant to anonymize Jobcoin transactions
 
 ## Running an instance
 
-The simplest way to run this application is by cloning the repo into IntelliJ, importing as a gradle project and running the MixerEntry.java class. In the spirit of simplicity all app configuration is done in code.
+The simplest way to run this application is by cloning the repo into IntelliJ, importing as a gradle project and running the [MixerEntry.java](https://github.com/earce/jobcoin-mixer/blob/main/src/main/java/com/gemini/jobcoin/MixerEntry.java) class. In the spirit of simplicity all app configuration is done in code.
 
 A production grade version of this application would take in a config file which would allow to configure things like threads and Verticles without recompiling.
 
