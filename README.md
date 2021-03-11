@@ -25,6 +25,7 @@ A production grade version of this application would take in a config file which
 ```bash script
 $ git clone https://github.com/earce/jobcoin-mixer.git
 $ cd jobcoin-mixer
+$ chmod +x gradlew
 $ ./gradlew build
 $ path/to/java -cp build/libs/jobcoin-mixer-1.0-SNAPSHOT.jar com.gemini.jobcoin.MixerEntry
 ```
