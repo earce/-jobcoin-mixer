@@ -69,4 +69,4 @@ In a fully realized version of this application persistence and cross instance g
 
 The requirements for this application to be completely fault tolerate are significant, especially if one aims to reuse destination addresses as well as deposit addresses and handle modifying their values concurrently. A strong transaction system would need to exist in the Gemini API with individual transaction ids that could be used to tie out what has been send where by who in the event of system a failure. 
 
-The balance/transaction APIs do not tell us enough information tell us who balances belong to.
+The balance/transaction APIs do not tell us enough information about who balances belong to.
