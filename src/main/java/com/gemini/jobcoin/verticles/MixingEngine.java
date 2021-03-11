@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.gemini.jobcoin.JobcoinHttpServer;
-import com.gemini.jobcoin.exception.JobcoinException;
 import com.gemini.jobcoin.external.http.GeminiClient;
 import com.gemini.jobcoin.external.persistence.KVStore;
 import com.gemini.jobcoin.external.persistence.UUIDGenerator;
@@ -146,9 +145,9 @@ public class MixingEngine extends AbstractVerticle {
      *      to send it again later.
      *
      *      This behavior may not be desirable depending on the constraints of the
-     *      application. Another possibly better way to do this is if an exception
-     *      is throw to check the total sent balances to all addresses and update
-     *      your remaining + quantities to reflect this if it differs.
+     *      application. There are risks to submitting a transaction again if Gemini
+     *      reported a failure or the request timed out but in-fact succeeded. Building
+     *      guarantees to protect against this are a larger endeavor but worth mentioning.
      */
     public static class MixingTask implements Runnable {
 
