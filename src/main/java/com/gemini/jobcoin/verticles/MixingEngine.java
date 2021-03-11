@@ -66,8 +66,8 @@ public class MixingEngine extends AbstractVerticle {
                 geminiClient,
                 20000,
                 1000,
-                3,
-                10);
+                10,
+                3);
     }
 
     public MixingEngine(final KVStore<String, List<String>> depositAddressStore,
