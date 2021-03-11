@@ -39,6 +39,26 @@ Using the mixer involves several steps:
 
 At any point */v1/balance* can be used to check the balance of any address.
 
+## Curl examples for aformentioned usage
+
+Status check:
+
+```bash
+$ curl -X GET localhost/status
+```
+
+Register addresses:
+
+```bash
+$ curl --header "Content-Type: application/json" -X POST --data '["John","Alice", "Bob"]' localhost/v1/register
+```
+
+Get Balance:
+
+```bash
+$ curl -X GET localhost/v1/balance?address=Erick
+```
+
 ## Notes and other things considered
 
 Vertx was chosen because it is a well known reactor pattern (event driven) framework that makes bootstrapping a lot of the HTTP server portions fairly fast.
