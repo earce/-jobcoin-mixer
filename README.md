@@ -30,7 +30,7 @@ $ ./gradlew build
 $ path/to/java -cp build/libs/jobcoin-mixer-1.0-SNAPSHOT.jar com.gemini.jobcoin.MixerEntry
 ```
 
-This should startup the application on localhost:80.
+This should startup the application on localhost:8111
 
 **Note:** Logging is very limited in this application because most of the errors are captured and returned to the client. Logging is a bit subjective and opinionated, so I have opted to keep the logging minimal.
 
