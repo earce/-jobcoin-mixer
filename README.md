@@ -27,7 +27,7 @@ $ git clone https://github.com/earce/jobcoin-mixer.git
 $ cd jobcoin-mixer
 $ chmod +x gradlew
 $ ./gradlew build
-$ path/to/java -cp build/libs/jobcoin-mixer-1.0-SNAPSHOT.jar com.gemini.jobcoin.MixerEntry
+$ java -cp build/libs/jobcoin-mixer-1.0-SNAPSHOT.jar com.gemini.jobcoin.MixerEntry
 ```
 
 This should startup the application on localhost:8111
